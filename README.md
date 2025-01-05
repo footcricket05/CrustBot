@@ -1,5 +1,7 @@
 # 🌟 **CrustBot** 🌟  
-_A user-friendly chatbot for answering Crustdata API questions with precision and style._
+A user-friendly customer support chatbot designed to assist with Crustdata API questions. Featuring a dynamic chat interface, flexible backend, and responsive deployment for seamless user experience.
+
+---
 
 ## 🚀 **Features**
 - 🎨 **Interactive Chat Interface**: Engaging and easy-to-use frontend for users.  
