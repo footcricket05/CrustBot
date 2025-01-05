@@ -1,0 +1,105 @@
+{
+    "questions": [
+      {
+        "id": 1,
+        "question": "How do I search for people given their current title, current company and location?",
+        "answer": "Use the /screener/person/search API endpoint. Example: curl --location 'https://api.crustdata.com/screener/person/search'..."
+      },
+      {
+        "id": 2,
+        "question": "Is there a standard you're using for the region values?",
+        "answer": "Yes, refer to https://crustdata-docs-region-json.s3.us-east-2.amazonaws.com/updated_regions.json."
+      },
+      {
+        "id": 3,
+        "question": "How do I authenticate API requests?",
+        "answer": "You can authenticate API requests by including an 'Authorization' header with a Bearer token. Example: 'Authorization: Bearer <your_token>'."
+      },
+      {
+        "id": 4,
+        "question": "What data formats are supported for API requests?",
+        "answer": "Our APIs support JSON format for requests and responses. Ensure your Content-Type header is set to 'application/json'."
+      },
+      {
+        "id": 5,
+        "question": "Can I paginate results from the search API?",
+        "answer": "Yes, use the 'page' parameter in your API call to paginate results. Example: 'page=1' for the first page, 'page=2' for the next."
+      },
+      {
+        "id": 6,
+        "question": "How do I retrieve data for multiple people using their email addresses?",
+        "answer": "Use the /screener/person/search API with the 'filters' parameter set to 'EMAIL'. Example: { 'filters': [{ 'filter_type': 'EMAIL', 'value': ['email1@example.com', 'email2@example.com'] }] }."
+      },
+      {
+        "id": 7,
+        "question": "What are the rate limits for API usage?",
+        "answer": "Our APIs support up to 1000 requests per minute. If you exceed this limit, you will receive a 429 Too Many Requests error."
+      },
+      {
+        "id": 8,
+        "question": "What should I do if I get a 400 Bad Request error?",
+        "answer": "A 400 error indicates invalid input. Check your API payload and ensure all required fields are provided and properly formatted."
+      },
+      {
+        "id": 9,
+        "question": "How do I use filters for job titles?",
+        "answer": "Use the 'CURRENT_TITLE' filter in the API payload. Example: { 'filters': [{ 'filter_type': 'CURRENT_TITLE', 'type': 'in', 'value': ['Engineer', 'Manager'] }] }."
+      },
+      {
+        "id": 10,
+        "question": "Can I search for people by their skills?",
+        "answer": "Currently, searching by skills is not supported. However, you can use job titles or company names as filters for more precise results."
+      },
+      {
+        "id": 11,
+        "question": "How do I handle errors in API responses?",
+        "answer": "Check the 'error' field in the API response JSON. It will contain the error type and message. Example: { 'error': 'Invalid token' }."
+      },
+      {
+        "id": 12,
+        "question": "How do I update my API token?",
+        "answer": "Log in to your Crustdata account dashboard, navigate to API settings, and regenerate your token. Replace the old token in your API calls."
+      },
+      {
+        "id": 13,
+        "question": "Is the API compatible with Python requests library?",
+        "answer": "Yes, you can use the Python requests library to make API calls. Example: 'requests.post(url, headers=headers, json=payload)'."
+      },
+      {
+        "id": 14,
+        "question": "Can I sort search results?",
+        "answer": "Yes, use the 'sort' parameter in the payload. Example: { 'sort': { 'field': 'name', 'order': 'asc' } } to sort by name in ascending order."
+      },
+      {
+        "id": 15,
+        "question": "What happens if I pass an empty filter to the search API?",
+        "answer": "If you pass an empty filter, the API will return all available data for the endpoint, which may result in a large response."
+      },
+      {
+        "id": 16,
+        "question": "How do I check the status of my API key?",
+        "answer": "You can check the status of your API key in the Crustdata dashboard under 'API Key Management'."
+      },
+      {
+        "id": 17,
+        "question": "What is the response format for a successful API call?",
+        "answer": "A successful API call returns a JSON object containing the requested data, along with metadata like 'status', 'total_records', and 'page'."
+      },
+      {
+        "id": 18,
+        "question": "Can I filter results by industry?",
+        "answer": "Yes, use the 'CURRENT_INDUSTRY' filter in your payload. Example: { 'filters': [{ 'filter_type': 'CURRENT_INDUSTRY', 'value': ['Technology', 'Healthcare'] }] }."
+      },
+      {
+        "id": 19,
+        "question": "How do I report a bug in the API?",
+        "answer": "You can report bugs via the Crustdata support portal or email us at support@crustdata.com with a detailed description of the issue."
+      },
+      {
+        "id": 20,
+        "question": "Can I use the API for bulk data extraction?",
+        "answer": "Bulk data extraction requires additional permissions. Contact support@crustdata.com for approval and documentation."
+      }
+    ]
+  }
+  
