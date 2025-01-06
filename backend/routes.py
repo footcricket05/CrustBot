@@ -1,9 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
 import json
 from rapidfuzz import process, fuzz  # Correct import for fuzz
+import requests  # For API call validation
 
 router = APIRouter()
+
+# Flag to enable/disable mock API validation
+USE_MOCK_API = True
 
 # Define the request model
 class QuestionRequest(BaseModel):
@@ -17,6 +21,36 @@ def load_db():
 def save_db(data):
     with open("db.json", "w") as file:
         json.dump(data, file, indent=4)
+
+def validate_api_payload(payload):
+    """
+    Mock or validate API payload for testing Level 1.
+    """
+    if USE_MOCK_API:
+        # Return a mocked response for testing
+        return {
+            "success": True,
+            "data": {
+                "message": "Mocked API response for testing.",
+                "results": [
+                    {"name": "John Doe", "title": "Engineer", "company": "OpenAI"},
+                    {"name": "Jane Smith", "title": "Manager", "company": "Google"},
+                ],
+            },
+        }
+    try:
+        # Simulate an API call using requests
+        response = requests.post(
+            url="https://api.crustdata.com/screener/person/search",
+            headers={"Content-Type": "application/json", "Authorization": "Token YOUR_API_TOKEN"},
+            json=payload,
+        )
+        if response.status_code == 200:
+            return {"success": True, "data": response.json()}
+        else:
+            return {"success": False, "error": f"API returned status {response.status_code}"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
 # Routes
 @router.get("/questions")
@@ -48,10 +82,36 @@ def ask_question(request: QuestionRequest):
             matched_question = matches[0]
             for q in db["questions"]:
                 if q["question"] == matched_question:
-                    return {"response": q["answer"]}
+                    # Check if the question has an API payload for validation
+                    if "api_payload" in q:
+                        validation_result = validate_api_payload(q["api_payload"])
+                        if validation_result["success"]:
+                            # Format the API response for the user
+                            results = validation_result["data"]["results"]
+                            formatted_results = "\n".join(
+                                [
+                                    f"- Name: {r['name']}\n  Title: {r['title']}\n  Company: {r['company']}"
+                                    for r in results
+                                ]
+                            )
+                            return {
+                                "response": f"API Call Succeeded!\n\nMessage: {validation_result['data']['message']}\n\nResults:\n{formatted_results}",
+                                "follow_up": "Would you like to refine your search or explore other queries?",
+                            }
+                        else:
+                            return {"response": f"API call failed: {validation_result['error']}"}
+
+                    # Return the static answer if no API payload is defined
+                    return {
+                        "response": q["answer"],
+                        "follow_up": "Would you like to explore similar queries or ask another question?",
+                    }
 
         # Default response if no match is found
-        return {"response": f"Sorry, I don't have an answer for: {request.question}"}
+        return {
+            "response": f"Sorry, I don't have an answer for: {request.question}",
+            "follow_up": "Can I help you with something else?",
+        }
     except Exception as e:
         print(f"Error in /ask route: {e}")
         return {"response": "An internal error occurred. Please try again later."}

@@ -1,30 +1,32 @@
-# 🌟 **CrustBot** 🌟  
-A user-friendly customer support chatbot designed to assist with Crustdata API questions. Featuring a dynamic chat interface, flexible backend, and responsive deployment for seamless user experience.
+# 🌟 **CrustBot** 🌟
+_A user-friendly chatbot for answering Crustdata API questions with precision and style._
 
 ---
 
 ## 🚀 **Features**
-- 🎨 **Interactive Chat Interface**: Engaging and easy-to-use frontend for users.  
-- ⚙️ **Dynamic Question Matching**: Matches user questions to predefined answers using fuzzy logic.  
-- 📡 **FastAPI Backend**: High-performance backend to handle API requests seamlessly.  
-- 📚 **Expandable Knowledge Base**: Easily update Q&A data for enhanced support.  
-- 🌐 **Ready for Deployment**: Frontend deployable on Netlify; backend containerized via Docker.  
+- 🎨 **Interactive Chat Interface**: Engaging and easy-to-use frontend for users.
+- ⚙️ **Dynamic Question Matching**: Matches user questions to predefined answers using fuzzy logic.
+- 📡 **FastAPI Backend**: High-performance backend to handle API requests seamlessly.
+- 📚 **Expandable Knowledge Base**: Easily update Q&A data for enhanced support.
+- 🌐 **Mock API Response Support**: Test API-related features without requiring actual API tokens.
+- 🌐 **Follow-up Suggestions**: Dynamically suggest follow-up questions based on context.
+- 🌐 **Properly Formatted Outputs**: Display answers in clean, multi-line formatted responses.
 
 ---
 
 ## 🛠️ **Tech Stack**
-- **Frontend**: React + TailwindCSS  
-- **Backend**: FastAPI (Python)  
-- **Database**: JSON (extendable to SQLite/PostgreSQL)  
-- **Deployment**: Docker, Netlify  
+- **Frontend**: React + TailwindCSS
+- **Backend**: FastAPI (Python)
+- **Database**: JSON (extendable to SQLite/PostgreSQL)
+- **Deployment**: Docker, Netlify
 
 ---
 
 ## 🏗️ **Setup and Installation**
 
 ### 🔧 Prerequisites
-- Node.js & npm  
-- Python 3.9+  
+- Node.js & npm
+- Python 3.9+
 - Docker (optional for backend)
 
 ### 💻 Local Setup
@@ -43,6 +45,7 @@ A user-friendly customer support chatbot designed to assist with Crustdata API q
    ```bash
    uvicorn app:app --host 0.0.0.0 --port 8000
    ```
+4. **Mock API Support**: If you don't have an API token, the backend will simulate API responses for testing Level 1 functionality.
 
 #### **Frontend**
 1. Navigate to the frontend folder:
@@ -57,6 +60,14 @@ A user-friendly customer support chatbot designed to assist with Crustdata API q
    ```bash
    npm run dev
    ```
+4. For production, build the frontend:
+   ```bash
+   npm run build
+   ```
+5. Serve the build folder locally:
+   ```bash
+   npx serve -s dist
+   ```
 
 ---
 
@@ -69,12 +80,15 @@ A user-friendly customer support chatbot designed to assist with Crustdata API q
    ```bash
    docker run -d -p 8000:8000 CrustBot-backend
    ```
+3. Serve the frontend:
+   - Either build the frontend as described above.
+   - Use Netlify or a static file server to host the frontend.
 
 ---
 
 ## 🌐 **Deployment**
-- **Frontend**: Deploy the `dist` folder on [Netlify](https://www.netlify.com/).  
-- **Backend**: Host on any cloud platform (AWS, Heroku, etc.) or expose locally using Ngrok.  
+- **Frontend**: Deploy the `dist` folder on [Netlify](https://www.netlify.com/).
+- **Backend**: Host on any cloud platform (AWS, Heroku, etc.) or expose locally using Ngrok.
 
 ---
 
@@ -83,18 +97,21 @@ A user-friendly customer support chatbot designed to assist with Crustdata API q
 2. Ask questions like:
    - "How do I search for people by their current title?"
    - "What are the rate limits for API usage?"
-3. Get instant, accurate responses powered by the backend.
+3. Mock API responses are returned for testing purposes if a token isn't provided.
+4. Responses include:
+   - API call results (mocked or real).
+   - Follow-up question suggestions.
 
 ---
 
 ## 🛡️ **Contributing**
-1. Fork the repository.  
-2. Create a new branch: `git checkout -b feature-branch`.  
-3. Commit your changes: `git commit -m 'Add some feature'`.  
-4. Push to the branch: `git push origin feature-branch`.  
-5. Submit a pull request.  
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature-branch`.
+3. Commit your changes: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature-branch`.
+5. Submit a pull request.
 
 ---
 
 ## 📄 **License**
-This project is licensed under the MIT License.  
+This project is licensed under the MIT License.

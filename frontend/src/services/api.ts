@@ -1,18 +1,20 @@
-import { API_CONFIG } from '../config/api';
+import { API_CONFIG } from "../config/api";
 
-interface ApiResponse {
+export interface ApiResponse {
   response: string;
+  context?: string;
+  follow_up?: string;
 }
 
-interface Question {
+export interface Question {
   question: string;
   answer: string;
 }
 
 export class ApiError extends Error {
   constructor(public status?: number, message?: string) {
-    super(message || 'An error occurred while communicating with the server');
-    this.name = 'ApiError';
+    super(message || "An error occurred while communicating with the server");
+    this.name = "ApiError";
   }
 }
 
@@ -26,45 +28,59 @@ const handleApiResponse = async <T>(response: Response): Promise<T> => {
     const data = await response.json();
     return data;
   } catch {
-    throw new ApiError(undefined, 'Invalid response format from server');
+    throw new ApiError(undefined, "Invalid response format from server");
   }
 };
 
 // Sends a user's question to the backend and gets the response
-export async function askQuestion(question: string): Promise<ApiResponse> {
+export const askQuestion = async (
+  content: string,
+  context?: string
+): Promise<ApiResponse> => {
   try {
-    const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ASK}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ question }),
-    });
+    const response = await fetch(
+      `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ASK}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: content, context }),
+      }
+    );
 
-    const data = await handleApiResponse<{ response: string }>(response); // Ensure the backend returns { response: string }
-    return { response: data.response }; // Use 'response' key from backend
+    return await handleApiResponse<ApiResponse>(response);
   } catch (error) {
-    console.error('Error in askQuestion:', error);
+    console.error("Error in askQuestion:", error);
     if (error instanceof ApiError) {
       throw error;
     }
-    throw new ApiError(undefined, error instanceof Error ? error.message : 'Network error');
+    throw new ApiError(
+      undefined,
+      error instanceof Error ? error.message : "Network error"
+    );
   }
-}
+};
 
 // Fetches all predefined questions from the backend
-export async function fetchQuestions(): Promise<Question[]> {
+export const fetchQuestions = async (): Promise<Question[]> => {
   try {
-    const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.QUESTIONS}`, {
-      method: 'GET',
-    });
+    const response = await fetch(
+      `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.QUESTIONS}`,
+      {
+        method: "GET",
+      }
+    );
 
-    return await handleApiResponse<Question[]>(response); // Ensure the backend returns an array of questions
+    return await handleApiResponse<Question[]>(response);
   } catch (error) {
-    console.error('Error in fetchQuestions:', error);
+    console.error("Error in fetchQuestions:", error);
     if (error instanceof ApiError) {
       throw error;
     }
-    throw new ApiError(undefined, error instanceof Error ? error.message : 'Network error');
+    throw new ApiError(
+      undefined,
+      error instanceof Error ? error.message : "Network error"
+    );
   }
-}
+};

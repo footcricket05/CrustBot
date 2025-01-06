@@ -1,4 +1,3 @@
-import React from 'react';
 import { MessageCircle, Bot } from 'lucide-react';
 import { Message } from '../types/chat';
 import { formatTime } from '../utils/date';
@@ -9,13 +8,13 @@ interface ChatMessageProps {
 
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user';
-  
+
   return (
     <div className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
-      <div 
+      <div
         className={`p-2.5 rounded-xl ${
-          isUser 
-            ? 'bg-gradient-to-br from-blue-500 to-blue-600' 
+          isUser
+            ? 'bg-gradient-to-br from-blue-500 to-blue-600'
             : 'bg-gradient-to-br from-gray-100 to-gray-200'
         }`}
       >
@@ -32,7 +31,12 @@ export function ChatMessage({ message }: ChatMessageProps) {
             : 'bg-white border border-gray-100 text-gray-800 rounded-tl-none'
         }`}
       >
-        <p className="text-sm leading-relaxed">{message.content}</p>
+        {/* Split message content into lines and render each line */}
+        {message.content.split('\n').map((line, index) => (
+          <p key={index} className="text-sm leading-relaxed">
+            {line.trim()}
+          </p>
+        ))}
         <span className={`text-xs mt-2 block ${isUser ? 'text-blue-100' : 'text-gray-400'}`}>
           {formatTime(message.timestamp)}
         </span>
