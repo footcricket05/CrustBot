@@ -1,117 +1,101 @@
-# 🌟 **CrustBot** 🌟
-_A user-friendly chatbot for answering Crustdata API questions with precision and style._
+# CrustBot: Crustdata API Chatbot Challenge
+
+This project was built as part of the **Crustdata API Chatbot Challenge**, where I developed a chatbot named CrustBot that assists users in querying Crustdata's APIs. The chatbot was designed and implemented incrementally through multiple levels of functionality, as outlined below. 🚀
 
 ---
 
-## 🚀 **Features**
-- 🎨 **Interactive Chat Interface**: Engaging and easy-to-use frontend for users.
-- ⚙️ **Dynamic Question Matching**: Matches user questions to predefined answers using fuzzy logic.
-- 📡 **FastAPI Backend**: High-performance backend to handle API requests seamlessly.
-- 📚 **Expandable Knowledge Base**: Easily update Q&A data for enhanced support.
-- 🌐 **Mock API Response Support**: Test API-related features without requiring actual API tokens.
-- 🌐 **Follow-up Suggestions**: Dynamically suggest follow-up questions based on context.
-- 🌐 **Properly Formatted Outputs**: Display answers in clean, multi-line formatted responses.
+## 🏗️ Project Levels and Features
+
+### Level 0: Basic Static Chat 💬
+- Implemented a basic chat interface where users can ask questions about Crustdata's APIs.
+- The chatbot provides accurate technical answers based on the API documentation.
+- Examples of supported queries include:
+  - Searching for people by title, company, and location.
+  - Understanding API error responses and resolving issues.
+- **Status:** ✅ Completed and deployed.
+
+### Level 1: Agentic Behavior 🤖
+- Validates API request examples before sharing them with the user.
+- Automatically checks for errors in API requests and suggests corrections.
+- Supports conversational mode, allowing users to ask follow-up questions within the same thread.
+- **Status:** ✅ Implemented and functional.
+
+### Level 2: Enhanced Knowledge Base 📚
+- Added the ability to ingest and integrate additional knowledge bases, including:
+  - Questions and answers from Crustdata’s support Slack channels.
+  - Updated API documentation.
+  - Additional resources to improve chatbot accuracy.
+- **Status:** ✅ Integrated.
+
+### Level 3: Slack Integration 💼
+- Integrated the chatbot into Slack as a Slack bot:
+  - Works within specific channels.
+  - Accessible to designated users only.
+  - Drafts responses for messages in real-time.
+- **Status:** ✅ Fully functional Slack bot deployed.
 
 ---
 
-## 🛠️ **Tech Stack**
-- **Frontend**: React + TailwindCSS
-- **Backend**: FastAPI (Python)
-- **Database**: JSON (extendable to SQLite/PostgreSQL)
-- **Deployment**: Docker, Netlify
+## 🔗 Project Repository
+The complete code for this project is available on my GitHub:
+[Crustdata Chatbot Repository](https://github.com/footcricket05/CrustBot)
 
 ---
 
-## 🏗️ **Setup and Installation**
+## 📜 Appendix: Example Questions and Answers
 
-### 🔧 Prerequisites
-- Node.js & npm
-- Python 3.9+
-- Docker (optional for backend)
+### Example 1: Searching for People by Criteria
+**Question:**
+"How do I search for people given their current title, current company, and location?"
 
-### 💻 Local Setup
+**Answer:**
+Use the endpoint `api.crustdata.com/screener/person/search`. Here’s a sample cURL request:
+```bash
+curl --location 'https://api.crustdata.com/screener/person/search' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Token $token' \
+--data '{
+   "filters": [
+       {
+           "filter_type": "CURRENT_COMPANY",
+           "type": "in",
+           "value": [
+               "openai.com"
+           ]
+       },
+       {
+           "filter_type": "CURRENT_TITLE",
+           "type": "in",
+           "value": [
+               "engineer"
+           ]
+       },
+       {
+           "filter_type": "REGION",
+           "type": "in",
+           "value": [
+               "San Francisco, California, United States"
+           ]
+       }        
+   ],
+   "page": 1
+}'
+```
 
-#### **Backend**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/footcricket05/CrustBot.git
-   cd CrustBot/backend
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the backend:
-   ```bash
-   uvicorn app:app --host 0.0.0.0 --port 8000
-   ```
-4. **Mock API Support**: If you don't have an API token, the backend will simulate API responses for testing Level 1 functionality.
+### Example 2: Handling API Errors
+**Question:**
+"I get an error when using the region filter. How should I format my input?"
 
-#### **Frontend**
-1. Navigate to the frontend folder:
-   ```bash
-   cd ../frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-4. For production, build the frontend:
-   ```bash
-   npm run build
-   ```
-5. Serve the build folder locally:
-   ```bash
-   npx serve -s dist
-   ```
-
----
-
-## 🐳 **Docker Setup**
-1. Build the backend image:
-   ```bash
-   docker build -t CrustBot-backend ./backend
-   ```
-2. Run the backend container:
-   ```bash
-   docker run -d -p 8000:8000 CrustBot-backend
-   ```
-3. Serve the frontend:
-   - Either build the frontend as described above.
-   - Use Netlify or a static file server to host the frontend.
+**Answer:**
+Ensure that the region value matches one of the supported options from the list here:
+[Updated Region Values](https://crustdata-docs-region-json.s3.us-east-2.amazonaws.com/updated_regions.json).
 
 ---
 
-## 🌐 **Deployment**
-- **Frontend**: Deploy the `dist` folder on [Netlify](https://www.netlify.com/).
-- **Backend**: Host on any cloud platform (AWS, Heroku, etc.) or expose locally using Ngrok.
+## 📞 Contact
+For any queries, feel free to reach out via [LinkedIn](https://linkedin.com/in/shaurya-srinet) or open an issue on the repository.
 
 ---
 
-## 🤖 **Usage**
-1. Open the deployed frontend.
-2. Ask questions like:
-   - "How do I search for people by their current title?"
-   - "What are the rate limits for API usage?"
-3. Mock API responses are returned for testing purposes if a token isn't provided.
-4. Responses include:
-   - API call results (mocked or real).
-   - Follow-up question suggestions.
+Thank you for reviewing my project! 😊
 
----
-
-## 🛡️ **Contributing**
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-branch`.
-3. Commit your changes: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature-branch`.
-5. Submit a pull request.
-
----
-
-## 📄 **License**
-This project is licensed under the MIT License.
